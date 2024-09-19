@@ -13,7 +13,7 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 
-struct WeatherInfo : Codable {
+struct WeatherInfo : Codable, Sendable {
 	let coord : Coord?
 	let weather : [Weather]?
 	let base : String?

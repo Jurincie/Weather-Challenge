@@ -35,6 +35,8 @@
     write unit tests
     write UI tests
  
+    Maybe: Add Radar page
+ 
     Use GoogleMaps and OpenWeather APIs:
         GoogleMaps ApiKey: AIzaSyAxuTSaQ5QXBzd_1tQQB_pXHljqdQXY7ys
         OpenWeatherAppApiKey: b3660824db9ee07a39128f01914989bc

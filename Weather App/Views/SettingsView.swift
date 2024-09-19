@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var settingsViewModel = SettingsViewModel()
+    @Environment(AppCoordinator.self) var appCoordinator
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack(spacing: 4) {
                 Spacer(minLength: 20)
-                Toggle("Temp" , isOn: $settingsViewModel.isCentigrade)
-                Text(settingsViewModel.isCentigrade ? "°C" : "°F")
+                Toggle("Temp" , isOn: Bindable(appCoordinator).isCelcius)
+                Text(appCoordinator.isCelcius ? "°C" : "°F")
                 Spacer(minLength: 20)
             }
             HStack(spacing: 4) {
                 Spacer(minLength: 20)
-                Toggle("Wind Speed", isOn: $settingsViewModel.isMetric)
-                Text(settingsViewModel.isMetric ? "KPH" : "MPH")
+                Toggle("Wind Speed", isOn: Bindable(appCoordinator).isMetric)
+                Text(appCoordinator.isMetric ? "KPH" : "MPH")
                 Spacer(minLength: 20)
             }
         }

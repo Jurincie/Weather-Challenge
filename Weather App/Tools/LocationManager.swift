@@ -18,4 +18,19 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
     }
     
+    func requestLocation() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        self.location = location
+    }
+    
 }
