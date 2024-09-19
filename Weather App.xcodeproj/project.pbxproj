@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7A160C722C9C5C6D00CCA0DB /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7A160C0E2C9B7B7F00CCA0DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		7A160BFD2C9B7B7E00CCA0DB /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A160C0D2C9B7B7F00CCA0DB /* Weather AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A160C172C9B7B7F00CCA0DB /* Weather AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		7A160BF42C9B7B7E00CCA0DB = {
 			isa = PBXGroup;
 			children = (
+				7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */,
 				7A160BFF2C9B7B7E00CCA0DB /* Weather App */,
 				7A160C102C9B7B7F00CCA0DB /* Weather AppTests */,
 				7A160C1A2C9B7B7F00CCA0DB /* Weather AppUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A160C722C9C5C6D00CCA0DB /* ReadMe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +406,8 @@
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs your location to provide current local weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +437,8 @@
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs your location to provide current local weather";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
