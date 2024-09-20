@@ -34,9 +34,22 @@
 		7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7AF66B0C2C9DF70C00F53C72 /* Exceptions for "Weather App" folder in "Weather App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Weather-App-Info.plist",
+			);
+			target = 7A160BFC2C9B7B7E00CCA0DB /* Weather App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7A160BFF2C9B7B7E00CCA0DB /* Weather App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7AF66B0C2C9DF70C00F53C72 /* Exceptions for "Weather App" folder in "Weather App" target */,
+			);
 			path = "Weather App";
 			sourceTree = "<group>";
 		};
@@ -80,6 +93,7 @@
 		7A160BF42C9B7B7E00CCA0DB = {
 			isa = PBXGroup;
 			children = (
+				7A160C7E2C9CC22A00CCA0DB /* Views */,
 				7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */,
 				7A160BFF2C9B7B7E00CCA0DB /* Weather App */,
 				7A160C102C9B7B7F00CCA0DB /* Weather AppTests */,
@@ -96,6 +110,13 @@
 				7A160C172C9B7B7F00CCA0DB /* Weather AppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7A160C7E2C9CC22A00CCA0DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +427,7 @@
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Weather-App-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -413,6 +435,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -437,6 +460,7 @@
 				DEVELOPMENT_TEAM = J5T6Z5N38H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Weather-App-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs your location to provide current local weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -444,6 +468,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

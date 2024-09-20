@@ -1,36 +1,41 @@
 //
-//  LocationManager.swift
+//  LocationManager 2.swift
 //  Weather App
 //
 //  Created by Ron Jurincie on 9/19/24.
 //
 
 import CoreLocation
-import Foundation
 
-@Observable
-class LocationManager: NSObject, CLLocationManagerDelegate {
-    private let locationManager = CLLocationManager()
+class LocationManager {
+    let geocoder = CLGeocoder()
+    var cityName = ""
+    let manager = CLLocationManager()
     var location: CLLocation?
     
-    override init() {
-        super.init()
-        locationManager.delegate = self
+    init(currentLocation: CLLocation? = nil) {
+        self.location = currentLocation
+        requestLocationPermission()
+        getCurrentLocation()
+        print(currentLocation.debugDescription)
     }
     
-    func requestLocation() {
-        locationManager.requestWhenInUseAuthorization()
+    func requestLocationPermission() {
+        manager.requestWhenInUseAuthorization()
     }
     
-    func locationManager(_ manager: CLLocationManager,
-                         didFailWithError error: Error) {
-        print(error.localizedDescription)
+    func getCurrentLocation() {
+        manager.startUpdatingLocation()
+        location = manager.location
     }
     
-    func locationManager(_ manager: CLLocationManager,
-                         didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        self.location = location
+    func reverseGeocoding(location: CLLocation) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location,
+                                        completionHandler: {[weak self] (placemarks, error) -> Void in
+            guard let placemark = placemarks?.first,
+                  placemark.locality != nil else { return }
+            self?.cityName = placemark.locality!
+        })
     }
-    
 }

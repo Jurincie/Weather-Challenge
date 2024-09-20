@@ -8,28 +8,42 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.horizontalSizeClass) var horizontal
     @Environment(AppCoordinator.self) var appCoordinator
+    var viewModel = SettingsViewModel.shared
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack(spacing: 4) {
-                Spacer(minLength: 20)
-                Toggle("Temp" , isOn: Bindable(appCoordinator).isCelcius)
-                Text(appCoordinator.isCelcius ? "°C" : "°F")
-                Spacer(minLength: 20)
+        ZStack {
+            Color.gray
+            VStack(alignment: .leading, spacing: 20) {
+                HStack(spacing: 4) {
+                    Spacer()
+                    Toggle("Temperature (°C/°F)" , isOn: Bindable(viewModel).isCelcius)
+                    Text(viewModel.isCelcius ? "°C" : "°F")
+                    Spacer()
+                }
+                HStack(spacing: 4) {
+                    Spacer()
+                    Toggle("Wind Speed (KPH/MPH)", isOn: Bindable(viewModel).isMetric)
+                    Text(viewModel.isMetric ? "KPH" : "MPH")
+                    Spacer()
+                }
+                .navigationTitle("Settings")
             }
-            HStack(spacing: 4) {
-                Spacer(minLength: 20)
-                Toggle("Wind Speed", isOn: Bindable(appCoordinator).isMetric)
-                Text(appCoordinator.isMetric ? "KPH" : "MPH")
-                Spacer(minLength: 20)
-            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action : {
+                appCoordinator.pop()
+            }){
+                Image(systemName: "arrow.left")
+                    .foregroundColor(Color.primary)
+            })
+            .frame(maxWidth: horizontal == .compact ? 350 : 450)
+            .font(.headline)
+            .bold()
+            .padding()
+            .border(.primary, width: 2)
+            .padding()
         }
-        .font(.caption)
-        .bold()
-        .padding()
-        .border(.primary, width: 2)
-        .padding()
     }
 }
 

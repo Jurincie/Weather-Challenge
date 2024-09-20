@@ -9,43 +9,103 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(AppCoordinator.self) var appCoordinator
-    var viewModel = ViewModel()
-    let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        return formatter
-    }()
+    let viewModel = ViewModel()
     
     var body: some View {
         NavigationStack {
-            VStack {
-                if viewModel.weatherInfo?.main?.temp != nil {
-                    HStack {
-                        let temperature = appCoordinator.isCelcius ? viewModel.kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : viewModel.kelvinToFahrenheit((viewModel.weatherInfo?.main?.temp)!)
-                        Text("Current Temp: ")
-                        if let str = formatter.string(for: temperature) {
-                            Text(str)
-                            Text(appCoordinator.isCelcius ? "°C" : "°F")
+            ZStack {
+                // background
+                Color.yellow
+                
+                // foreground
+                VStack {
+                    SearchView()
+                        .padding()
+                        .font(.title)
+                    Spacer()
+                    Image(.launch)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height:100)
+                    let str = String(viewModel.weatherInfo?.name ?? "")
+                    Text("Location: " + str)
+                        .font(.largeTitle)
+                    VStack {
+                        if viewModel.weatherInfo?.main?.temp != nil {
+                            HStack {
+                                let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit((viewModel.weatherInfo?.main?.temp)!)
+                                Text("Current Temp: ")
+                                if let str = viewModel.formatter.string(for: temperature) {
+                                    Text(str)
+                                    Text(viewModel.settingsViewModel.isCelcius ? "°C" : "°F")
+                                }
+                            }
+                        }
+                        if viewModel.weatherInfo?.wind?.speed != nil {
+                            HStack {
+                                if let windSpeed = viewModel.weatherInfo?.wind?.speed {
+                                    let adjustedWindSpeed =  viewModel.settingsViewModel.isMetric ? mpsToKph(windSpeed) : mpsToMph(windSpeed)
+                                    Text("Wind Speed: ")
+                                    if let str = viewModel.formatter.string(for: adjustedWindSpeed) {
+                                        Text(str)
+                                        Text(viewModel.settingsViewModel.isMetric ? "KPH" : "MPH")
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-            }
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        appCoordinator.push(.settingsView)
-                    } label: {
-                        Text("Settings")
+                    .task {
+                        do {
+                            try await viewModel.loadWeather()
+                        } catch {
+                            
+                        }
                     }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                appCoordinator.push(.settingsView)
+                            }) {
+                                Text("Settings")
+                            }
+                        }
+                    }
+                    .navigationTitle("Weather")
+                    .padding()
+                    .border(.primary, width: 2)
+                    Spacer()
                 }
             }
-            .navigationTitle("Weather")
-            .padding()
+            .alert("API Error",
+                   isPresented: Bindable(viewModel).showErrorAlert) {
+                Button("OK", role: .cancel) {
+                    fatalError()
+                }
+            }
         }
     }
 }
 
-//#Preview {
-//    MainView()
-//}
+struct SearchView: View {
+    @State private var searchText = ""
+    @State private var searchIsActive = true
+        
+    
+    var body: some View {
+        HStack {
+            Text("Search: ")
+            TextField(text: $searchText) {
+                Text("Search Locations")
+            }
+            .padding()
+            .border(.primary, width: 1)
+            .font(.title)
+
+        }
+        .frame(alignment: .center)
+    }
+}
+
+#Preview {
+    MainView()
+}
