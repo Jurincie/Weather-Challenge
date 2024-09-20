@@ -34,22 +34,9 @@
 		7A160C712C9C5C6D00CCA0DB /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7AF66B0C2C9DF70C00F53C72 /* Exceptions for "Weather App" folder in "Weather App" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Weather-App-Info.plist",
-			);
-			target = 7A160BFC2C9B7B7E00CCA0DB /* Weather App */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7A160BFF2C9B7B7E00CCA0DB /* Weather App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				7AF66B0C2C9DF70C00F53C72 /* Exceptions for "Weather App" folder in "Weather App" target */,
-			);
 			path = "Weather App";
 			sourceTree = "<group>";
 		};

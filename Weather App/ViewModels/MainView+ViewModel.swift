@@ -15,7 +15,7 @@ extension MainView {
         let formatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
+            formatter.maximumFractionDigits = 0
             return formatter
         }()
         let locationManager = LocationManager()

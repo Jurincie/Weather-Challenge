@@ -15,7 +15,7 @@ struct MainView: View {
         NavigationStack {
             ZStack {
                 // background
-                Color.yellow
+                Color.blue
                 
                 // foreground
                 VStack {
@@ -26,15 +26,15 @@ struct MainView: View {
                     Image(.launch)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height:100)
+                        .frame(width: 200, height:200)
                     let str = String(viewModel.weatherInfo?.name ?? "")
                     Text("Location: " + str)
                         .font(.largeTitle)
-                    VStack {
+                    VStack(alignment: .leading) {
                         if viewModel.weatherInfo?.main?.temp != nil {
                             HStack {
                                 let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit((viewModel.weatherInfo?.main?.temp)!)
-                                Text("Current Temp: ")
+                                Text("Current Temp:")
                                 if let str = viewModel.formatter.string(for: temperature) {
                                     Text(str)
                                     Text(viewModel.settingsViewModel.isCelcius ? "°C" : "°F")
@@ -45,12 +45,17 @@ struct MainView: View {
                             HStack {
                                 if let windSpeed = viewModel.weatherInfo?.wind?.speed {
                                     let adjustedWindSpeed =  viewModel.settingsViewModel.isMetric ? mpsToKph(windSpeed) : mpsToMph(windSpeed)
-                                    Text("Wind Speed: ")
+                                    Text("Wind Speed:")
                                     if let str = viewModel.formatter.string(for: adjustedWindSpeed) {
                                         Text(str)
                                         Text(viewModel.settingsViewModel.isMetric ? "KPH" : "MPH")
                                     }
                                 }
+                            }
+                            HStack {
+                                Text("Wind Direction:")
+                                let string = String((viewModel.weatherInfo?.wind?.deg)!)
+                                Text(string + "°")
                             }
                         }
                     }
@@ -102,7 +107,7 @@ struct SearchView: View {
             .font(.title)
 
         }
-        .frame(alignment: .center)
+        .frame(alignment: .leading)
     }
 }
 
