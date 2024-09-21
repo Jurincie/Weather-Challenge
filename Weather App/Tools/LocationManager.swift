@@ -16,7 +16,7 @@ class LocationManager {
     let geocoder = CLGeocoder()
     let manager = CLLocationManager()
     var location: CLLocation?
-    var weatherQueryString = "https://api.openweathermap.org/data/2.5/weather?q=" + "Pittsford" + "&appid=" + "b3660824db9ee07a39128f01914989bc"
+    var weatherQueryString = "https://api.openweathermap.org/data/2.5/weather?q=" + "Pittsford,.NY,.US" + "&appid=" + "b3660824db9ee07a39128f01914989bc"
     
     // Singleton
     static var shared = LocationManager()
