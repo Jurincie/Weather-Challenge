@@ -42,7 +42,7 @@ class AppCoordinator: AppCoordinatorProtocol {
     func build(_ screen: Screen) -> some View {
         switch screen {
         case .mainView:
-            MainView()
+            MainView(locationSearchService: LocationSearchService())
         case .settingsView:
             SettingsView()
         }

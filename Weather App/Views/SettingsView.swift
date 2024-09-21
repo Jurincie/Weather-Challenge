@@ -30,6 +30,9 @@ struct SettingsView: View {
                 }
                 .navigationTitle("Settings")
             }
+            // HACK: To get the navigation to work wih MVVM-C
+            // using the navigationBarBackButton prevented popping this View
+            // causing multiple SettingsViews to accumulate in Coordinator Path
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: Button(action : {
                 appCoordinator.pop()

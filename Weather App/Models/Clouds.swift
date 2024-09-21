@@ -16,7 +16,6 @@ struct Clouds : Codable {
 	let all : Int?
 
 	enum CodingKeys: String, CodingKey {
-
 		case all = "all"
 	}
 
@@ -24,5 +23,4 @@ struct Clouds : Codable {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		all = try values.decodeIfPresent(Int.self, forKey: .all)
 	}
-
 }

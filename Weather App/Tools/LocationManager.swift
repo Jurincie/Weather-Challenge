@@ -8,16 +8,22 @@
 import CoreLocation
 
 class LocationManager {
+    let iconQueryPrefix = "https://openweathermap.org/img/wn/"
+    let iconQuerySuffix = "@2x.png"
+    let weatherApi_KEY = "b3660824db9ee07a39128f01914989bc"
+    let weatherQueryPrefix = "https://api.openweathermap.org/data/2.5/weather?q="
+    var locationName = ""
     let geocoder = CLGeocoder()
-    var cityName = ""
     let manager = CLLocationManager()
     var location: CLLocation?
+    var weatherQueryString = "https://api.openweathermap.org/data/2.5/weather?q=" + "Pittsford" + "&appid=" + "b3660824db9ee07a39128f01914989bc"
     
-    init(currentLocation: CLLocation? = nil) {
-        self.location = currentLocation
+    // Singleton
+    static var shared = LocationManager()
+    
+    init() {
         requestLocationPermission()
         getCurrentLocation()
-        print(currentLocation.debugDescription)
     }
     
     func requestLocationPermission() {
@@ -27,15 +33,17 @@ class LocationManager {
     func getCurrentLocation() {
         manager.startUpdatingLocation()
         location = manager.location
+        print(location.debugDescription)
     }
-    
-    func reverseGeocoding(location: CLLocation) {
+
+    func setWeatherQueryFromReverseGeoLocation(location: CLLocation) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location,
-                                        completionHandler: {[weak self] (placemarks, error) -> Void in
+                                        completionHandler: { [weak self] (placemarks, error) -> Void in
+            guard let self = self else { return }
             guard let placemark = placemarks?.first,
                   placemark.locality != nil else { return }
-            self?.cityName = placemark.locality!
+            weatherQueryString = weatherQueryPrefix  + placemark.locality! + "&appid=" + weatherApi_KEY
         })
     }
 }

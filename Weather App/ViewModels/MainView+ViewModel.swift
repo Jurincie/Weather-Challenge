@@ -18,22 +18,21 @@ extension MainView {
             formatter.maximumFractionDigits = 0
             return formatter
         }()
-        let locationManager = LocationManager()
-        let weatherService = WeatherService()
+        let locationManager = LocationManager.shared
         var showErrorAlert = false
         var settingsViewModel = SettingsViewModel.shared
         var weatherInfo: WeatherInfo?
         private var imageCache = Cache<WeatherImage>(maxElements: 10)
+        init() {
+            Task {
+                try await loadWeather()
+                print(locationManager.weatherQueryString)
+            }
+        }
         
         func loadWeather() async throws {
             if let location = locationManager.manager.location {
-                locationManager.reverseGeocoding(location: location)
-            }
-            let queryEndpoint = weatherService.weatherQuery + weatherService.locationName + "&appid=" + weatherService.weatherApi_KEY
-            do {
-                weatherInfo = try await ApiService.fetch(from: queryEndpoint)
-            } catch {
-                showErrorAlert = true
+                locationManager.setWeatherQueryFromReverseGeoLocation(location: location)
             }
         }
         

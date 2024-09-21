@@ -14,6 +14,8 @@ import SwiftUI
  https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
 
  https://api.openweathermap.org/data/2.5/weather?q=Dallas&appid=b3660824db9ee07a39128f01914989bc
+ 
+ get image name from weather->"icon"
  */
 
 struct WeatherImage: Identifiable {
