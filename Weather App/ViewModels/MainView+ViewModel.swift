@@ -26,6 +26,7 @@ extension MainView {
         var loading = false
         
         init() {
+            loading = true
             let center = NotificationCenter.default
             center.addObserver(self,
                                selector: #selector(fetchWeatherInfo),
@@ -35,7 +36,6 @@ extension MainView {
             Task {
                 try await loadWeather()
             }
-            loading = false
         }
         
         deinit
@@ -54,6 +54,7 @@ extension MainView {
                     showErrorAlert = true
                 }
             }
+            loading = false
         }
         
         func loadWeather() async throws {

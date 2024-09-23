@@ -19,33 +19,18 @@ struct MainView: View {
             VStack(alignment: .leading) {
                 if viewModel.loading {
                     ProgressView()
+                        .font(.largeTitle)
+                        .foregroundStyle(.white)
                 } else {
                     NavigationStack {
                         VStack(alignment: .leading) {
-                            Text(Date.now, format: .dateTime.day().month().year().hour().minute())
-                                .font(.caption)
-                            
                             HStack {
                                 Text(String(viewModel.weatherInfo?.name ?? ""))
                                     .font(.largeTitle)
-                                Spacer()
-                                if viewModel.weatherInfo?.main?.temp != nil {
-                                    let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit(
-                                        (viewModel.weatherInfo?.main?.temp)!
-                                    )
-                                    if let str = viewModel.formatter.string(
-                                        for: temperature
-                                    ) {
-                                        Text(str)
-                                            .font(.largeTitle)
-                                        Text(
-                                            viewModel.settingsViewModel.isCelcius ? "°C" : "°F"
-                                        )
-                                        .font(.largeTitle)
-                                    }
-                                }
                             }
                         }
+                        Text(Date.now, format: .dateTime.day().month().year().hour().minute())
+                            .font(.caption)
                         Spacer()
                         WeatherView(viewModel: viewModel)
                         Spacer()

@@ -11,40 +11,61 @@ struct WeatherView: View {
     var viewModel: MainView.ViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            if let iconName = viewModel.weatherInfo?.weather?[0].icon {
-                let queryString = viewModel.locationManager.weatherIconQueryPrefix + iconName + viewModel.locationManager.weatherIconQuerySuffix
-                AsyncImage(url: URL(string: queryString)) 
-                .frame(width: 100, height: 100)
-            }
-            if viewModel.weatherInfo?.wind?.speed != nil {
-                HStack {
-                    if let windSpeed = viewModel.weatherInfo?.wind?.speed {
-                        let adjustedWindSpeed =  viewModel.settingsViewModel.isMetric ? mpsToKph(windSpeed) : mpsToMph(
-                            windSpeed
+        VStack {
+            Text("Current Weather")
+            VStack(alignment: .leading) {
+                if let iconName = viewModel.weatherInfo?.weather?[0].icon {
+                    let queryString = viewModel.locationManager.weatherIconQueryPrefix + iconName + viewModel.locationManager.weatherIconQuerySuffix
+                    AsyncImage(url: URL(string: queryString))
+                    .frame(width: 50, height: 50)
+                }
+                if viewModel.weatherInfo?.main?.temp != nil {
+                    HStack {
+                        Image(systemName: "thermometer")
+                        let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit(
+                            (viewModel.weatherInfo?.main?.temp)!
                         )
-                        Image(systemName: "wind")
                         if let str = viewModel.formatter.string(
-                            for: adjustedWindSpeed
+                            for: temperature
                         ) {
                             Text(str)
-                            Text(viewModel.settingsViewModel.isMetric ? "KPH" : "MPH")
-                        }
-                        if let degrees = viewModel.weatherInfo?.wind?.deg {
-                            getSysImage(degrees)
+                                .font(.largeTitle)
+                            Text(
+                                viewModel.settingsViewModel.isCelcius ? "°C" : "°F"
+                            )
                         }
                     }
                 }
-            }
-            if viewModel.weatherInfo?.main?.humidity != nil {
-                HStack {
-                    Text("Humidity:")
-                    Text("\(viewModel.weatherInfo?.main?.humidity ?? 0)°")
+                if viewModel.weatherInfo?.wind?.speed != nil {
+                    HStack {
+                        if let windSpeed = viewModel.weatherInfo?.wind?.speed {
+                            let adjustedWindSpeed =  viewModel.settingsViewModel.isMetric ? mpsToKph(windSpeed) : mpsToMph(
+                                windSpeed
+                            )
+                            Image(systemName: "wind")
+                            if let str = viewModel.formatter.string(
+                                for: adjustedWindSpeed
+                            ) {
+                                Text(str)
+                                Text(viewModel.settingsViewModel.isMetric ? "KPH" : "MPH")
+                            }
+                            if let degrees = viewModel.weatherInfo?.wind?.deg {
+                                getSysImage(degrees)
+                            }
+                        }
+                    }
+                }
+                if viewModel.weatherInfo?.main?.humidity != nil {
+                    HStack {
+                        Text("Humidity:")
+                        Text("\(viewModel.weatherInfo?.main?.humidity ?? 0)°")
+                    }
                 }
             }
+            .font(.caption)
+            .padding()
+            .border(.primary, width: 2)
         }
-        .padding()
-        .border(.primary, width: 2)
     }
 }
 
