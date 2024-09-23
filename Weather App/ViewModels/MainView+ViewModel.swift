@@ -20,13 +20,39 @@ extension MainView {
         }()
         let locationManager = LocationManager.shared
         var showErrorAlert = false
-        var settingsViewModel = SettingsViewModel.shared
+        let settingsViewModel = SettingsViewModel.shared
         var weatherInfo: WeatherInfo?
-        private var imageCache = Cache<WeatherImage>(maxElements: 10)
+        var imageCache = AsyncImageCache(maxElements: 10)
+        var loading = false
+        
         init() {
+            let center = NotificationCenter.default
+            center.addObserver(self,
+                               selector: #selector(fetchWeatherInfo),
+                               name: Notification.Name("Fetch WeatherInfo"),
+                               object: nil)
+
             Task {
                 try await loadWeather()
-                print(locationManager.weatherQueryString)
+            }
+            loading = false
+        }
+        
+        deinit
+        {
+          NotificationCenter.default.removeObserver(self,
+                                                    name:NSNotification.Name(rawValue: "Fetch WeatherInfo"),
+                                                    object: String.self)
+
+        }
+        
+        @objc func fetchWeatherInfo(notification: Notification) {
+            Task {
+                do {
+                    weatherInfo = try await ApiService.fetch(from: notification.object as! String)
+                } catch {
+                    showErrorAlert = true
+                }
             }
         }
         
@@ -34,33 +60,6 @@ extension MainView {
             if let location = locationManager.manager.location {
                 locationManager.setWeatherQueryFromReverseGeoLocation(location: location)
             }
-        }
-        
-        func getImage(from imageName: String) -> Image? {
-            guard imageCache.elements.count > 0 else { return nil }
-            var newImage: Image? = nil
-            
-            // get new image
-            if let weatherImage = imageCache.elements.first(where: { image in
-                image.id == imageName
-            }) {
-                newImage = weatherImage.image
-            } else {
-                newImage = ApiService.fetchWeatherImage(name: imageName)
-            }
-            
-            if let image = newImage {
-                if imageCache.elements.count == imageCache.maxElements {
-                    imageCache.elements.removeLast()
-                }
-                
-                let weatherImage = WeatherImage(named: imageName,
-                                                image: image)
-                
-                imageCache.elements.insert(weatherImage, at: 0)
-            }
-            
-            return newImage
         }
     }
 }

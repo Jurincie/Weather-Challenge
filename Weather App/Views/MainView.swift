@@ -10,100 +10,72 @@ import SwiftUI
 struct MainView: View {
     @Environment(AppCoordinator.self) var appCoordinator
     @State var locationSearchService: LocationSearchService
+    @State var showSearchSheet = false
     let viewModel = ViewModel()
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                // background
-                Color.blue
-                // foreground
-                VStack {
-//                    VStack {
-//                        SearchBar(text: $locationSearchService.searchQuery)
-//                        List(locationSearchService.completions) { completion in
-//                            VStack(alignment: .leading) {
-//                                Text(completion.title)
-//                                Text(completion.subtitle)
-//                                    .font(.subheadline)
-//                                    .foregroundColor(.gray)
-//                            }
-//                        }.navigationBarTitle(Text("Search near me"))
-//                    }
-                
-                   Spacer()
-                    Image(.launch)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height:200)
-                    let str = String(viewModel.weatherInfo?.name ?? "")
-                    Text("Location: " + str)
-                        .font(.largeTitle)
-                    VStack(alignment: .leading) {
-                        if viewModel.weatherInfo?.main?.temp != nil {
+        ZStack {
+            Color.blue
+            VStack(alignment: .leading) {
+                if viewModel.loading {
+                    ProgressView()
+                } else {
+                    NavigationStack {
+                        VStack(alignment: .leading) {
+                            Text(Date.now, format: .dateTime.day().month().year().hour().minute())
+                                .font(.caption)
+                            
                             HStack {
-                                let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit(
-                                    (viewModel.weatherInfo?.main?.temp)!
-                                )
-                                Text("Current Temp:")
-                                if let str = viewModel.formatter.string(
-                                    for: temperature
-                                ) {
-                                    Text(str)
-                                    Text(
-                                        viewModel.settingsViewModel.isCelcius ? "°C" : "°F"
+                                Text(String(viewModel.weatherInfo?.name ?? ""))
+                                    .font(.largeTitle)
+                                Spacer()
+                                if viewModel.weatherInfo?.main?.temp != nil {
+                                    let temperature = viewModel.settingsViewModel.isCelcius ? kelvinToCelcius((viewModel.weatherInfo?.main?.temp)!) : kelvinToFahrenheit(
+                                        (viewModel.weatherInfo?.main?.temp)!
                                     )
-                                }
-                            }
-                        }
-                        if viewModel.weatherInfo?.wind?.speed != nil {
-                            HStack {
-                                if let windSpeed = viewModel.weatherInfo?.wind?.speed {
-                                    let adjustedWindSpeed =  viewModel.settingsViewModel.isMetric ? mpsToKph(windSpeed) : mpsToMph(
-                                        windSpeed
-                                    )
-                                    Text("Wind Speed:")
                                     if let str = viewModel.formatter.string(
-                                        for: adjustedWindSpeed
+                                        for: temperature
                                     ) {
                                         Text(str)
+                                            .font(.largeTitle)
                                         Text(
-                                            viewModel.settingsViewModel.isMetric ? "KPH" : "MPH"
+                                            viewModel.settingsViewModel.isCelcius ? "°C" : "°F"
                                         )
+                                        .font(.largeTitle)
                                     }
                                 }
                             }
-                            HStack {
-                                Text("Wind Direction:")
-                                let string = String(
-                                    (viewModel.weatherInfo?.wind?.deg)!
-                                )
-                                Text(string + "°")
-                            }
                         }
-                    }
-                    .task {
-                        do {
-                            do {
-                                viewModel.weatherInfo = try await ApiService.fetch(from: viewModel.locationManager.weatherQueryString)
-                            } catch {
-                                viewModel.showErrorAlert = true
-                            }
-                        }
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                appCoordinator.push(.settingsView)
-                            }) {
-                                Text("Settings")
-                            }
-                        }
+                        Spacer()
+                        WeatherView(viewModel: viewModel)
+                        Spacer()
                     }
                     .navigationTitle("Weather")
                     .padding()
-                    .border(.primary, width: 2)
-                    Spacer()
+                }
+            }
+            .sheet(isPresented: $showSearchSheet) {
+                SearchView(viewmodel: viewModel,
+                           locationSearchService: locationSearchService)
+                .presentationBackground(.thinMaterial)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        appCoordinator.push(.settingsView)
+                    }) {
+                        Text("Settings")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showSearchSheet = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                    }
                 }
             }
             .alert("API Error",
@@ -116,6 +88,7 @@ struct MainView: View {
     }
 }
 
-//#Preview {
-//    MainView()
-//}
+
+#Preview {
+    MainView(locationSearchService: LocationSearchService())
+}

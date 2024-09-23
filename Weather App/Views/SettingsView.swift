@@ -14,22 +14,23 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color.gray
+            Color.secondary
             VStack(alignment: .leading, spacing: 20) {
                 HStack(spacing: 4) {
-                    Spacer()
+//                    Spacer()
                     Toggle("Temperature (°C/°F)" , isOn: Bindable(viewModel).isCelcius)
                     Text(viewModel.isCelcius ? "°C" : "°F")
-                    Spacer()
+//                    Spacer()
                 }
                 HStack(spacing: 4) {
-                    Spacer()
+//                    Spacer()
                     Toggle("Wind Speed (KPH/MPH)", isOn: Bindable(viewModel).isMetric)
                     Text(viewModel.isMetric ? "KPH" : "MPH")
-                    Spacer()
+//                    Spacer()
                 }
                 .navigationTitle("Settings")
             }
+            .background(.yellow)
             // HACK: To get the navigation to work wih MVVM-C
             // using the navigationBarBackButton prevented popping this View
             // causing multiple SettingsViews to accumulate in Coordinator Path

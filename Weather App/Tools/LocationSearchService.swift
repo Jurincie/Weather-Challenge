@@ -21,7 +21,8 @@ struct SearchBar: UIViewRepresentable {
             _text = text
         }
 
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        func searchBar(_ searchBar: UISearchBar,
+                       textDidChange searchText: String) {
             text = searchText
         }
     }
@@ -33,7 +34,7 @@ struct SearchBar: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
-        searchBar.searchBarStyle = .minimal
+        searchBar.searchBarStyle = .default
         return searchBar
     }
 

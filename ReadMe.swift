@@ -8,8 +8,8 @@
 /*
  Create weather app:
     Use MVVM-C architecture ->
-        (2) Views
-        (2) ViewModels
+        Views
+        ViewModels
         (1) Coordinator
     
     use CoreLocation

@@ -1,0 +1,48 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld°" : {
+
+    },
+    "°C" : {
+
+    },
+    "°F" : {
+
+    },
+    "API Error" : {
+
+    },
+    "Humidity:" : {
+
+    },
+    "KPH" : {
+
+    },
+    "MPH" : {
+
+    },
+    "OK" : {
+
+    },
+    "Search" : {
+
+    },
+    "SEARCH" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Temperature (°C/°F)" : {
+
+    },
+    "Weather" : {
+
+    },
+    "Wind Speed (KPH/MPH)" : {
+
+    }
+  },
+  "version" : "1.0"
+}

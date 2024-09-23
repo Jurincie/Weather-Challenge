@@ -20,9 +20,9 @@ import SwiftUI
 
 struct WeatherImage: Identifiable {
     let id: String
-    let image: Image
+    let image: AsyncImage<Image>
     
-    init(named id: String, image: Image) {
+    init(named id: String, image: AsyncImage<Image>) {
         self.id = id
         self.image = image
     }

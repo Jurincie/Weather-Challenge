@@ -8,15 +8,21 @@
 import CoreLocation
 
 class LocationManager {
-    let iconQueryPrefix = "https://openweathermap.org/img/wn/"
-    let iconQuerySuffix = "@2x.png"
+    let weatherIconQueryPrefix = "https://openweathermap.org/img/wn/"
+    let weatherIconQuerySuffix = "@2x.png"
     let weatherApi_KEY = "b3660824db9ee07a39128f01914989bc"
     let weatherQueryPrefix = "https://api.openweathermap.org/data/2.5/weather?q="
     var locationName = ""
     let geocoder = CLGeocoder()
     let manager = CLLocationManager()
     var location: CLLocation?
-    var weatherQueryString = "https://api.openweathermap.org/data/2.5/weather?q=" + "Pittsford,.NY,.US" + "&appid=" + "b3660824db9ee07a39128f01914989bc"
+    var weatherQueryString = "" {
+        didSet {
+                let center = NotificationCenter.default
+                center.post(name: Notification.Name("Fetch WeatherInfo"),
+                            object: weatherQueryString)
+            }
+        }
     
     // Singleton
     static var shared = LocationManager()

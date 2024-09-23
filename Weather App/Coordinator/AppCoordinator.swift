@@ -12,7 +12,6 @@ import SwiftData
 enum Screen: Identifiable, Hashable {
     case mainView
     case settingsView
-    
     var id: Self { return self }
 }
 
@@ -26,8 +25,6 @@ protocol AppCoordinatorProtocol {
 @Observable
 class AppCoordinator: AppCoordinatorProtocol {
     var path: NavigationPath = NavigationPath()
-    var isCelcius = false
-    var isMetric = false
     
     func push(_ screen: Screen) {
         path.append(screen)

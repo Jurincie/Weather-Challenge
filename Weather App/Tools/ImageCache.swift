@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Cache<T> {
+struct AsyncImageCache {
     let maxElements: Int
-    var elements: [T] = [T]()
+    var elements = [AsyncImage<Image>]()
     
     init(maxElements: Int) {
         self.maxElements = maxElements
